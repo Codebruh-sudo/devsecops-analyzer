@@ -1,0 +1,2 @@
+Flask==2.2.5
+flasgger==0.9.5
