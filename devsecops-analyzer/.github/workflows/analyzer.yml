@@ -1,4 +1,4 @@
-name: Simple Docker CI
+name: Final Docker CI
 
 on:
   push:
@@ -7,13 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  docker-build:
+  build-docker:
     runs-on: ubuntu-latest
-    name: Build Docker Image
+    name: Build DevSecOps Image
 
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build from devsecops-analyzer folder
+      - name: Build Docker image from correct folder
         run: docker build -t devsecops-analyzer ./devsecops-analyzer
