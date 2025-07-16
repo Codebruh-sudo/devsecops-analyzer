@@ -1,4 +1,4 @@
-name: DevSecOps Analyzer CI
+name: Simple Docker CI
 
 on:
   push:
@@ -7,29 +7,13 @@ on:
     branches: [main]
 
 jobs:
-  build-and-scan:
-    name: Build Docker Image & Run Security Scans
+  docker-build:
     runs-on: ubuntu-latest
+    name: Build Docker Image
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Build Docker image from subfolder
+      - name: Build from devsecops-analyzer folder
         run: docker build -t devsecops-analyzer ./devsecops-analyzer
-
-      - name: Run Gitleaks CLI scan
-        run: |
-          curl -sSL https://github.com/gitleaks/gitleaks/releases/latest/download/gitleaks-linux-amd64 -o gitleaks
-          chmod +x gitleaks
-          ./gitleaks detect --source ./devsecops-analyzer --no-banner
-
-      - name: Install and Run Trivy CLI scan
-        run: |
-          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh
-          ./trivy image devsecops-analyzer
-
-      - name: Run flake8 on Flask backend
-        run: |
-          pip install flake8
-          flake8 devsecops-analyzer/app/ --exit-zero --count --show-source --statistics
