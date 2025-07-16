@@ -1,0 +1,22 @@
+name: DevSecOps Build CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  docker-build:
+    runs-on: ubuntu-latest
+    name: Build Docker Image from Folder
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build image with dynamic tag
+        run: |
+          docker build ./devsecops-analyzer \
+            --file ./devsecops-analyzer/Dockerfile \
+            --tag devsecops-analyzer:$(date +%s)
