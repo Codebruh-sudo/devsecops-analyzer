@@ -27,6 +27,6 @@ RUN pip install --no-cache-dir -r requirements.txt yamllint
 
 # App code
 COPY app/ app/
-COPY uploads/ uploads/
+
 
 CMD ["python", "-m", "app"]
